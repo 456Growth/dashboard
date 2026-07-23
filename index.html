@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>456 Growth — CAP Roster</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;font-size:13px}
+.container{max-width:1400px;margin:0 auto;padding:1.5rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+h1{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.live{display:flex;align-items:center;gap:5px;font-size:11px;color:#5f5e5a;background:#fff;border:.5px solid #e0ddd6;border-radius:20px;padding:3px 10px}
+.dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem}
+.stat{background:#fff;border:.5px solid #e0ddd6;border-radius:10px;padding:.875rem 1rem}
+.stat-label{font-size:11px;color:#888780;margin-bottom:4px}
+.stat-val{font-size:20px;font-weight:600;line-height:1.2}
+.filters{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filters input,.filters select{font-size:12px;padding:6px 10px;border-radius:8px;border:.5px solid #d3d1c7;background:#fff;color:#1a1a18;outline:none}
+.filters input{flex:1;min-width:160px}
+.filters input:focus,.filters select:focus{border-color:#378ADD}
+.btn{font-size:12px;padding:6px 14px;border-radius:8px;border:.5px solid #d3d1c7;background:#fff;color:#1a1a18;cursor:pointer}
+.btn:hover{background:#f0f0ee}
+.updated{font-size:11px;color:#888780}
+.view{display:none}
+.view.active{display:block}
+.tbl-wrap{background:#fff;border:.5px solid #e0ddd6;border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+thead{background:#f5f5f3}
+th{text-align:left;padding:9px 11px;font-weight:500;color:#888780;font-size:11px;border-bottom:.5px solid #e0ddd6;white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:#1a1a18}
+td{padding:9px 11px;border-bottom:.5px solid #e0ddd6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;vertical-align:middle}
+tr.cr{cursor:pointer}
+tr.cr:hover td{background:#fafaf8}
+tr.dr>td{padding:0;white-space:normal;overflow:visible;border-bottom:.5px solid #b4b2a9}
+.dp{padding:1.25rem;background:#fafaf8}
+.ps{background:#fff;border:.5px solid #e0ddd6;border-radius:8px;padding:.875rem}
+.ps h4{font-size:10px;font-weight:600;color:#888780;margin-bottom:.625rem;text-transform:uppercase;letter-spacing:.06em}
+.brand-table{width:100%;border-collapse:collapse;font-size:11px}
+.brand-table th{text-align:left;padding:4px 8px;font-weight:500;color:#888780;border-bottom:.5px solid #e0ddd6;font-size:10px}
+.brand-table td{padding:5px 8px;border-bottom:.5px solid #e0ddd6}
+.brand-table tr:last-child td{border-bottom:none}
+.brand-table tr:hover td{background:#fafaf8}
+.creator-table{width:100%;border-collapse:collapse;font-size:11px}
+.creator-table th{text-align:left;padding:4px 8px;font-weight:500;color:#888780;border-bottom:.5px solid #e0ddd6;font-size:10px}
+.creator-table td{padding:5px 8px;border-bottom:.5px solid #e0ddd6}
+.creator-table tr:last-child td{border-bottom:none}
+.creator-table tr:hover td{background:#fafaf8}
+.bar-wrap{display:flex;align-items:center;gap:6px}
+.bar{height:4px;border-radius:2px;background:#378ADD;min-width:2px}
+.handle-link{color:#185FA5;text-decoration:none;font-weight:600}
+.handle-link:hover{text-decoration:underline}
+.tier{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600}
+.tL1{background:#EAF3DE;color:#27500A}.tL2{background:#E6F1FB;color:#0C447C}
+.tL3{background:#EEEDFE;color:#3C3489}.tL4{background:#FAEEDA;color:#633806}
+.tL5{background:#FAECE7;color:#712B13}.tL6{background:#FBEAF0;color:#72243E}
+.tL7{background:#FCEBEB;color:#791F1F}
+.loading{text-align:center;padding:3rem;color:#888780}
+.empty{text-align:center;padding:2rem;color:#888780;font-size:12px}
+.mt{color:#888780;font-size:11px;padding:4px 0}
+.notice{background:#E6F1FB;border:.5px solid #b8d4f0;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#0C447C;margin-bottom:1rem;display:none}
+.msel{position:relative;display:inline-block}
+.msel-menu{display:none;position:absolute;top:110%;left:0;background:#fff;border:.5px solid #d3d1c7;border-radius:8px;padding:6px;min-width:200px;max-height:240px;overflow-y:auto;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.msel-item{display:flex;align-items:center;gap:6px;font-size:12px;padding:5px 6px;cursor:pointer;white-space:nowrap;border-radius:4px}
+.msel-item:hover{background:#f5f5f3}
+.msel-item input{margin:0}
+.msel-clear{font-size:11px;color:#378ADD;padding:5px 6px;cursor:pointer;border-top:.5px solid #e0ddd6;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <h1 id="page-title">456 Growth &mdash; CAP Roster</h1>
+      <div class="live"><span class="dot"></span>Live</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="updated" id="updated-at"></span>
+      <button class="btn" onclick="refreshAll()">&#8635; Refresh</button>
+    </div>
+  </div>
+
+  <!-- CREATOR STATS -->
+  <div id="creator-stats" class="stats">
+    <div class="stat"><div class="stat-label">Total creators</div><div class="stat-val" id="s-total">—</div></div>
+    <div class="stat"><div class="stat-label">Total GMV (30d)</div><div class="stat-val" id="s-gmv">—</div></div>
+    <div class="stat"><div class="stat-label">Total followers</div><div class="stat-val" id="s-foll">—</div></div>
+    <div class="stat"><div class="stat-label">Last synced</div><div class="stat-val" id="s-sync" style="font-size:13px;padding-top:2px">—</div></div>
+  </div>
+
+  <!-- Brand data has moved to its own separate page entirely; not linked from here. -->
+
+  <!-- CREATOR VIEW -->
+  <div id="view-creators" class="view active">
+    <div class="filters">
+      <input type="text" id="c-search" placeholder="Search handle..." oninput="renderCreators()">
+      <select id="c-tier" onchange="renderCreators()">
+        <option value="">All tiers</option>
+        <option>L1</option><option>L2</option><option>L3</option>
+        <option>L4</option><option>L5</option><option>L6</option><option>L7</option>
+      </select>
+      <select id="c-gmv" onchange="renderCreators()">
+        <option value="0">Any GMV</option>
+        <option value="150000">$150K+</option>
+        <option value="60000">$60K+</option>
+        <option value="25000">$25K+</option>
+        <option value="5000">$5K+</option>
+      </select>
+      <div class="msel" id="c-category-wrap">
+        <button type="button" class="btn" id="c-category-btn" onclick="toggleCategoryMenu(event)">All categories</button>
+        <div class="msel-menu" id="c-category-menu"></div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <div id="c-tbl"><div class="loading">Loading roster...</div></div>
+    </div>
+  </div>
+
+</div>
+<script>
+// ============================================================
+// STATE
+// ============================================================
+var CREATORS = [];
+var cOpenRow = null;
+var cSort = 'gmv', cAsc = false;
+var creatorsDone = false;
+var selectedCategories = [];
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  google.script.run.withSuccessHandler(onCreatorsLoaded).withFailureHandler(onCreatorErr).getDashboardData();
+}
+
+function refreshAll() {
+  creatorsDone = false;
+  CREATORS = [];
+  document.getElementById('c-tbl').innerHTML = '<div class="loading">Fetching data...</div>';
+  init();
+}
+
+// ============================================================
+// CREATORS
+// ============================================================
+function onCreatorsLoaded(r) {
+  if (!r.success) { onCreatorErr({message: r.error}); return; }
+  CREATORS = r.data || [];
+  document.getElementById('updated-at').textContent = 'Synced ' + new Date().toLocaleTimeString();
+  document.getElementById('s-gmv').textContent  = r.totalGmv  || '—';
+  document.getElementById('s-foll').textContent = r.totalFollowers || '—';
+  document.getElementById('s-sync').textContent = r.lastUpdated || '—';
+  creatorsDone = true;
+  populateCategoryFilter();
+  renderCreators();
+}
+
+function populateCategoryFilter() {
+  var menu = document.getElementById('c-category-menu');
+  var cats = Array.from(new Set(CREATORS.map(function(c){ return c.category; }).filter(function(v){ return v && v !== '—' && v !== '--'; }))).sort();
+  var h = '';
+  cats.forEach(function(cat) {
+    var checked = selectedCategories.indexOf(cat) > -1 ? 'checked' : '';
+    h += '<label class="msel-item"><input type="checkbox" ' + checked + ' onchange="toggleCategory(\'' + esc(cat).replace(/'/g,"\\'") + '\')">' + esc(cat) + '</label>';
+  });
+  h += '<div class="msel-clear" onclick="clearCategories()">Clear all</div>';
+  menu.innerHTML = h;
+  updateCategoryButtonLabel();
+}
+
+function toggleCategory(cat) {
+  var idx = selectedCategories.indexOf(cat);
+  if (idx > -1) selectedCategories.splice(idx, 1);
+  else selectedCategories.push(cat);
+  updateCategoryButtonLabel();
+  renderCreators();
+}
+
+function clearCategories() {
+  selectedCategories = [];
+  populateCategoryFilter();
+  renderCreators();
+}
+
+function updateCategoryButtonLabel() {
+  var btn = document.getElementById('c-category-btn');
+  btn.textContent = selectedCategories.length
+    ? ('Categories (' + selectedCategories.length + ')')
+    : 'All categories';
+}
+
+function toggleCategoryMenu(evt) {
+  evt.stopPropagation();
+  var menu = document.getElementById('c-category-menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+document.addEventListener('click', function(e) {
+  var wrap = document.getElementById('c-category-wrap');
+  var menu = document.getElementById('c-category-menu');
+  if (wrap && menu && !wrap.contains(e.target)) menu.style.display = 'none';
+});
+
+function onCreatorErr(e) {
+  document.getElementById('c-tbl').innerHTML = '<div class="loading" style="color:#A32D2D">Error loading creators: ' + (e.message||'unknown') + '</div>';
+}
+
+function renderCreators() {
+  var q      = document.getElementById('c-search').value.toLowerCase();
+  var tier   = document.getElementById('c-tier').value;
+  var gmvMin = parseInt(document.getElementById('c-gmv').value) || 0;
+
+  var f = CREATORS.filter(function(c) {
+    if (q && c.handle.toLowerCase().indexOf(q) < 0) return false;
+    if (tier && c.tier !== tier) return false;
+    if (selectedCategories.length && selectedCategories.indexOf(c.category) === -1) return false;
+    if (gmvMin && (c.gmv||0) < gmvMin) return false;
+    return true;
+  });
+
+  f.sort(function(a, b) {
+    var av, bv;
+    if      (cSort === 'gmv')      { av = a.gmv||0;              bv = b.gmv||0; }
+    else if (cSort === 'rank')     { av = parseInt(a.rank)||999; bv = parseInt(b.rank)||999; }
+    else if (cSort === 'foll')     { av = a.followers||0;        bv = b.followers||0; }
+    else if (cSort === 'handle')   { av = a.handle;               bv = b.handle; }
+    else if (cSort === 'category') { av = a.category||'';         bv = b.category||''; }
+    else if (cSort === 'avpv')     { av = parseFloat(a.avgGmvPerVideo)||0; bv = parseFloat(b.avgGmvPerVideo)||0; }
+    else if (cSort === 'growth')   { av = parseFloat(a.followerGrowth)||0; bv = parseFloat(b.followerGrowth)||0; }
+    else                            { av = a[cSort]||0;            bv = b[cSort]||0; }
+    if (av < bv) return cAsc ? -1 : 1;
+    if (av > bv) return cAsc ?  1 : -1;
+    return 0;
+  });
+
+  document.getElementById('s-total').textContent = f.length;
+
+  var h = '<table><thead><tr>';
+  h += cth('#',              'rank',     '4%');
+  h += cth('Handle',         'handle',   '13%');
+  h += cth('Tier',           'tier',     '5%');
+  h += cth('GMV (30d)',      'gmv',      '10%');
+  h += cth('Followers',      'foll',     '9%');
+  h += cth('Follower Growth','growth',   '11%');
+  h += cth('Category',       'category', '11%');
+  h += cth('Avg GMV/Video',  'avpv',     '9%');
+  h += '<th style="width:28%">Top brands (30d)</th>';
+  h += '</tr></thead><tbody>';
+
+  if (!f.length) {
+    h += '<tr><td colspan="9"><div class="empty">No creators match.</div></td></tr>';
+  } else {
+    f.forEach(function(c) {
+      var isOpen   = cOpenRow === c.handle;
+      var topBrand = c.brands && c.brands.length ? c.brands[0].name : '—';
+      var more     = c.brands && c.brands.length > 1 ? ' +' + (c.brands.length - 1) : '';
+      var avpvDisplay = (c.avgGmvPerVideo!=null && c.avgGmvPerVideo!=='--') ? '$'+parseFloat(c.avgGmvPerVideo).toFixed(2) : '--';
+      h += '<tr class="cr" onclick="cToggle(\'' + esc(c.handle) + '\')">';
+      h += '<td style="color:#888780;font-size:11px">' + esc(String(c.rank)) + '</td>';
+      h += '<td><a class="handle-link" href="https://www.tiktok.com/@' + esc(c.handle) + '" target="_blank" onclick="event.stopPropagation()">@' + esc(c.handle) + '</a></td>';
+      h += '<td><span class="tier t' + esc(c.tier) + '">' + esc(c.tier) + '</span></td>';
+      h += '<td style="font-weight:600">' + esc(c.gmvDisplay) + '</td>';
+      h += '<td style="color:#888780">' + esc(c.followersDisplay) + '</td>';
+      h += '<td style="color:#888780;font-size:11px">' + esc(c.followerGrowth || '--') + '</td>';
+      h += '<td style="color:#5f5e5a">' + esc(c.category || '—') + '</td>';
+      h += '<td style="color:#185FA5;font-weight:600">' + esc(avpvDisplay) + '</td>';
+      h += '<td style="color:#5f5e5a;font-size:11px">' + esc(topBrand + more) + ' <span style="color:#ccc">' + (isOpen ? '▲' : '▼') + '</span></td>';
+      h += '</tr>';
+      if (isOpen) h += '<tr class="dr"><td colspan="9">' + buildCreatorDetail(c) + '</td></tr>';
+    });
+  }
+  h += '</tbody></table>';
+  document.getElementById('c-tbl').innerHTML = h;
+}
+
+function buildCreatorDetail(c) {
+  var maxGmv   = c.brands && c.brands.length ? c.brands[0].gmv || 1 : 1;
+  var brandHtml = '';
+  if (c.brands && c.brands.length) {
+    brandHtml = '<table class="brand-table"><thead><tr><th>#</th><th>Brand</th><th>GMV (30d)</th><th>Videos</th><th>Views</th><th></th></tr></thead><tbody>';
+    c.brands.forEach(function(b, i) {
+      var w = Math.max(2, Math.round((b.gmv / maxGmv) * 80));
+      brandHtml += '<tr>';
+      brandHtml += '<td style="color:#888780">' + (i+1) + '</td>';
+      brandHtml += '<td style="font-weight:500">' + esc(b.name) + '</td>';
+      brandHtml += '<td style="font-weight:600;color:#185FA5">' + esc(b.gmvDisplay) + '</td>';
+      brandHtml += '<td style="color:#888780">' + esc(String(b.videos)) + '</td>';
+      brandHtml += '<td style="color:#888780">' + esc(b.views) + '</td>';
+      brandHtml += '<td><div class="bar-wrap"><div class="bar" style="width:' + w + 'px"></div></div></td>';
+      brandHtml += '</tr>';
+    });
+    brandHtml += '</tbody></table>';
+  } else {
+    brandHtml = '<div class="mt">No brand data in latest snapshot.</div>';
+  }
+
+  return '<div class="dp"><div class="ps"><h4>Top brands — Cruva (30d)</h4>' + brandHtml + '</div></div>';
+}
+
+function cToggle(handle) { cOpenRow = cOpenRow === handle ? null : handle; renderCreators(); }
+
+function cth(label, col, width) {
+  var arrow = cSort === col ? (cAsc ? ' ↑' : ' ↓') : '';
+  return '<th style="width:' + width + '" onclick="cSortBy(\'' + col + '\')">' + label + arrow + '</th>';
+}
+
+function cSortBy(col) {
+  if (cSort === col) cAsc = !cAsc;
+  else { cSort = col; cAsc = (col === 'rank' || col === 'handle'); }
+  renderCreators();
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function fmtGMV(n) {
+  if (!n && n !== 0) return '—';
+  n = parseFloat(n); if (isNaN(n)) return '—';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000)    return '$' + Math.round(n/1000) + 'K';
+  return '$' + Math.round(n);
+}
+
+function fmtNum(n) {
+  if (!n) return '—';
+  n = parseFloat(n); if (isNaN(n)) return '—';
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000)    return Math.round(n/1000) + 'K';
+  return String(Math.round(n));
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+</body>
+</html>
