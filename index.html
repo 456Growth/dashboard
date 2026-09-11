@@ -104,11 +104,10 @@ tr.dr>td{padding:0;white-space:normal;overflow:visible;border-bottom:.5px solid 
   <div id="view-creators" class="view active">
     <div class="filters">
       <input type="text" id="c-search" placeholder="Search handle..." oninput="renderCreators()">
-      <select id="c-tier" onchange="renderCreators()">
-        <option value="">All tiers</option>
-        <option>L1</option><option>L2</option><option>L3</option>
-        <option>L4</option><option>L5</option><option>L6</option><option>L7</option>
-      </select>
+      <div class="msel" id="c-tier-wrap">
+        <button type="button" class="btn" id="c-tier-btn" onclick="toggleTierMenu(event)">All tiers</button>
+        <div class="msel-menu" id="c-tier-menu"></div>
+      </div>
       <select id="c-gmv" onchange="renderCreators()">
         <option value="0">Any GMV</option>
         <option value="150000">$150K+</option>
@@ -142,6 +141,8 @@ var cOpenRow = null;
 var cSort = 'gmv', cAsc = false;
 var creatorsDone = false;
 var selectedCategories = [];
+var selectedTiers = [];
+var ALL_TIERS = ['L1','L2','L3','L4','L5','L6','L7'];
 
 // ============================================================
 // INIT
@@ -175,6 +176,7 @@ function onCreatorsLoaded(r) {
   document.getElementById('s-sync').textContent = r.lastUpdated || '—';
   creatorsDone = true;
   populateCategoryFilter();
+  populateTierFilter();
   renderCreators();
 }
 
@@ -218,10 +220,52 @@ function toggleCategoryMenu(evt) {
   menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
 
+function populateTierFilter() {
+  var menu = document.getElementById('c-tier-menu');
+  var h = '';
+  ALL_TIERS.forEach(function(t) {
+    var checked = selectedTiers.indexOf(t) > -1 ? 'checked' : '';
+    h += '<label class="msel-item"><input type="checkbox" ' + checked + ' onchange="toggleTier(\'' + t + '\')">' + t + '</label>';
+  });
+  h += '<div class="msel-clear" onclick="clearTiers()">Clear all</div>';
+  menu.innerHTML = h;
+  updateTierButtonLabel();
+}
+
+function toggleTier(t) {
+  var idx = selectedTiers.indexOf(t);
+  if (idx > -1) selectedTiers.splice(idx, 1);
+  else selectedTiers.push(t);
+  updateTierButtonLabel();
+  renderCreators();
+}
+
+function clearTiers() {
+  selectedTiers = [];
+  populateTierFilter();
+  renderCreators();
+}
+
+function updateTierButtonLabel() {
+  var btn = document.getElementById('c-tier-btn');
+  btn.textContent = selectedTiers.length
+    ? ('Tiers (' + selectedTiers.length + ')')
+    : 'All tiers';
+}
+
+function toggleTierMenu(evt) {
+  evt.stopPropagation();
+  var menu = document.getElementById('c-tier-menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
 document.addEventListener('click', function(e) {
   var wrap = document.getElementById('c-category-wrap');
   var menu = document.getElementById('c-category-menu');
   if (wrap && menu && !wrap.contains(e.target)) menu.style.display = 'none';
+  var tWrap = document.getElementById('c-tier-wrap');
+  var tMenu = document.getElementById('c-tier-menu');
+  if (tWrap && tMenu && !tWrap.contains(e.target)) tMenu.style.display = 'none';
 });
 
 function onCreatorErr(e) {
@@ -230,13 +274,12 @@ function onCreatorErr(e) {
 
 function renderCreators() {
   var q      = document.getElementById('c-search').value.toLowerCase();
-  var tier   = document.getElementById('c-tier').value;
   var gmvMin = parseInt(document.getElementById('c-gmv').value) || 0;
   var growth = document.getElementById('c-growth').value;
 
   var f = CREATORS.filter(function(c) {
     if (q && c.handle.toLowerCase().indexOf(q) < 0) return false;
-    if (tier && c.tier !== tier) return false;
+    if (selectedTiers.length && selectedTiers.indexOf(c.tier) === -1) return false;
     if (selectedCategories.length && selectedCategories.indexOf(c.category) === -1) return false;
     if (gmvMin && (c.gmv||0) < gmvMin) return false;
     if (growth) {
