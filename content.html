@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>456 Growth — Top Content</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;font-size:13px}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.75rem}
+h1{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.live{display:flex;align-items:center;gap:5px;font-size:11px;color:#5f5e5a;background:#fff;border:.5px solid #e0ddd6;border-radius:20px;padding:3px 10px}
+.dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.nav{display:flex;gap:4px;background:#f1efe8;border-radius:10px;padding:3px;margin-bottom:1.25rem;width:fit-content}
+.nav a{font-size:12px;padding:6px 14px;border-radius:8px;text-decoration:none;color:#5f5e5a;font-weight:500}
+.nav a.active{background:#fff;color:#1a1a18;box-shadow:0 .5px 2px rgba(0,0,0,.08)}
+.sub{font-size:12px;color:#888780;margin-bottom:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.25rem}
+.stat{background:#fff;border:.5px solid #e0ddd6;border-radius:10px;padding:.875rem 1rem}
+  .stat-label{font-size:11px;color:#888780;margin-bottom:4px}
+.stat-val{font-size:20px;font-weight:600;line-height:1.2}
+.updated{font-size:11px;color:#888780}
+.btn{font-size:12px;padding:6px 14px;border-radius:8px;border:.5px solid #d3d1c7;background:#fff;color:#1a1a18;cursor:pointer}
+.btn:hover{background:#f0f0ee}
+  .tbl-wrap{background:#fff;border:.5px solid #e0ddd6;border-radius:12px;overflow:hidden}
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+thead{background:#f5f5f3}
+  th{text-align:left;padding:9px 11px;font-weight:500;color:#888780;font-size:11px;border-bottom:.5px solid #e0ddd6;white-space:nowrap}
+td{padding:9px 11px;border-bottom:.5px solid #e0ddd6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+  tr.row:hover td{background:#fafaf8}
+.handle-link{color:#185FA5;text-decoration:none;font-weight:600}
+.handle-link:hover{text-decoration:underline}
+  .tier{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600}
+.tL1{background:#EAF3DE;color:#27500A}.tL2{background:#E6F1FB;color:#0C447C}
+.tL3{background:#EEEDFE;color:#3C3489}.tL4{background:#FAEEDA;color:#633806}
+  .tL5{background:#FAECE7;color:#712B13}.tL6{background:#FBEAF0;color:#72243E}
+.tL7{background:#FCEBEB;color:#791F1F}
+.watch-link{color:#5f5e5a;text-decoration:none;font-size:11px}
+.watch-link:hover{color:#185FA5}
+.loading{text-align:center;padding:3rem;color:#888780}
+.empty{text-align:center;padding:2rem;color:#888780;font-size:12px}
+</style>
+  </head>
+  <body>
+  <div class="container">
+
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <h1>456 Growth</h1>
+        <div class="live"><span class="dot"></span>Live</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="updated" id="updated-at"></span>
+        <button class="btn" onclick="load()">&#8635; Refresh</button>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="index.html">Roster</a>
+      <a href="content.html" class="active">Top content</a>
+    </div>
+
+    <p class="sub">Top video per creator, ranked by video GMV (30d) &middot; scoped to a 150-creator pool</p>
+
+    <div class="stats" id="c-stats">
+      <div class="stat"><div class="stat-label">Videos ranked</div><div class="stat-val" id="s-count">—</div></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <div id="c-tbl"><div class="loading">Loading top content...</div></div>
+    </div>
+
+  </div>
+  <script>
+  var API_URL = 'https://script.google.com/macros/s/AKfycbxI0as4vxdoXpl2yJSG1EKL3ftfSK2Amxx4TqpAYiTQCDLK6U8Wz1nDl4GT2UE1j76B/exec';
+
+function load() {
+    document.getElementById('c-tbl').innerHTML = '<div class="loading">Loading top content...</div>';
+  fetch(API_URL + '?tab=videos')
+        .then(function(r) { return r.json(); })
+    .then(onLoaded)
+    .catch(function(e) { onErr({message: e.message}); });
+}
+
+function onLoaded(r) {
+    if (!r.success) { onErr({message: r.error}); return; }
+  var videos = r.data || [];
+  document.getElementById('updated-at').textContent = 'Synced ' + new Date().toLocaleTimeString();
+  document.getElementById('s-count').textContent = videos.length;
+
+  var h = '<table><thead><tr>';
+  h += '<th style="width:6%">#</th>';
+  h += '<th style="width:22%">Handle</th>';
+  h += '<th style="width:8%">Tier</th>';
+  h += '<th style="width:14%">GMV (30d)</th>';
+  h += '<th style="width:14%">Views</th>';
+  h += '<th style="width:22%">Brand</th>';
+  h += '<th style="width:14%"></th>';
+  h += '</tr></thead><tbody>';
+
+  if (!videos.length) {
+    h += '<tr><td colspan="7"><div class="empty">No content ranked yet.</div></td></tr>';
+  } else {
+    videos.forEach(function(v) {
+            h += '<tr class="row">';
+      h += '<td style="color:#888780">' + esc(v.rank) + '</td>';
+      h += '<td><a class="handle-link" href="https://www.tiktok.com/@' + esc(v.handle) + '" target="_blank" rel="noopener noreferrer">@' + esc(v.handle) + '</a></td>';
+      h += '<td><span class="tier t' + esc(v.tier) + '">' + esc(v.tier) + '</span></td>';
+      h += '<td style="font-weight:600">' + esc(v.gmvDisplay) + '</td>';
+      h += '<td style="color:#888780">' + esc(v.viewsDisplay) + '</td>';
+      h += '<td style="color:#5f5e5a">' + esc(v.brand) + '</td>';
+      h += '<td><a class="watch-link" href="' + esc(v.videoLink) + '" target="_blank" rel="noopener noreferrer">Watch &rarr;</a></td>';
+      h += '</tr>';
+    });
+  }
+  h += '</tbody></table>';
+  document.getElementById('c-tbl').innerHTML = h;
+}
+
+function onErr(e) {
+    document.getElementById('c-tbl').innerHTML = '<div class="loading" style="color:#A32D2D">Error loading top content: ' + (e.message||'unknown') + '</div>';
+}
+
+function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+load();
+</script>
+  </body>
+  </html>
+  
