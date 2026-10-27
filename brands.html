@@ -51,6 +51,70 @@ tr.dr>td{padding:0;white-space:normal;overflow:visible;border-bottom:.5px solid 
 .notice{background:#E6F1FB;border:.5px solid #b8d4f0;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#0C447C;margin-bottom:1rem;display:none}
 .back-link{font-size:12px;color:#185FA5;text-decoration:none;font-weight:600}
 .back-link:hover{text-decoration:underline}
+#view-casting .panel{background:#fff;border:.5px solid #e0ddd6;border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem}
+#view-casting .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+#view-casting .fld{display:flex;flex-direction:column;gap:5px;position:relative;min-width:0}
+#view-casting .fld>label,#view-casting .lbl{font-size:11px;color:#888780;font-weight:500}
+#view-casting .hint{font-size:11px;color:#888780;font-weight:400}
+#view-casting input[type=text],#view-casting select{font-size:12px;padding:7px 10px;border-radius:8px;border:.5px solid #d3d1c7;background:#fff;color:#1a1a18;outline:none;width:100%}
+#view-casting input[type=text]:focus,#view-casting select:focus{border-color:#378ADD}
+#view-casting select:disabled{background:#f5f5f3;color:#b4b2a9}
+#view-casting .btn{font-size:12px;padding:6px 14px;border-radius:8px;border:.5px solid #d3d1c7;background:#fff;color:#1a1a18;cursor:pointer;white-space:nowrap}
+#view-casting .btn:hover{background:#f0f0ee}
+#view-casting .chips{display:flex;flex-wrap:wrap;gap:6px}
+#view-casting .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 10px;border-radius:20px;border:.5px solid #d3d1c7;background:#fff;color:#5f5e5a;cursor:pointer;user-select:none}
+#view-casting .chip.on{background:#E6F1FB;border-color:#85B7EB;color:#0C447C}
+#view-casting .chip .x{font-size:13px;line-height:1;color:#888780}
+#view-casting .chip.on .x{color:#185FA5}
+#view-casting .sug{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:.5px solid #d3d1c7;border-radius:8px;margin-top:2px;z-index:30;box-shadow:0 4px 14px rgba(0,0,0,.1);max-height:260px;overflow-y:auto}
+#view-casting .sug div{padding:7px 10px;font-size:12px;cursor:pointer;display:flex;justify-content:space-between;gap:8px}
+#view-casting .sug div:hover,#view-casting .sug div.hl{background:#f5f5f3}
+#view-casting .sug span{color:#888780;font-size:11px;white-space:nowrap}
+#view-casting .opts{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:12px}
+#view-casting .opts label{display:flex;align-items:center;gap:6px;font-size:12px;color:#5f5e5a;cursor:pointer}
+#view-casting .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1rem}
+#view-casting .stat{background:#fff;border:.5px solid #e0ddd6;border-radius:10px;padding:.875rem 1rem}
+#view-casting .stat-label{font-size:11px;color:#888780;margin-bottom:4px}
+#view-casting .stat-val{font-size:20px;font-weight:600;line-height:1.2}
+#view-casting .toolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:.75rem;flex-wrap:wrap}
+#view-casting .toolbar .note{font-size:11px;color:#888780}
+#view-casting .tbl-wrap{background:#fff;border:.5px solid #e0ddd6;border-radius:12px;overflow-x:auto}
+#view-casting table{width:100%;border-collapse:collapse;min-width:980px}
+#view-casting thead{background:#f5f5f3}
+#view-casting th{text-align:left;padding:9px 11px;font-weight:500;color:#888780;font-size:11px;border-bottom:.5px solid #e0ddd6;white-space:nowrap;cursor:pointer;user-select:none}
+#view-casting th:hover{color:#1a1a18}
+#view-casting td{padding:9px 11px;border-bottom:.5px solid #e0ddd6;font-size:12px;vertical-align:top}
+#view-casting tr.cr{cursor:pointer}
+#view-casting tr.cr:hover td{background:#fafaf8}
+#view-casting tr.dr>td{padding:0;border-bottom:.5px solid #b4b2a9}
+#view-casting .dp{padding:1rem 1.25rem;background:#fafaf8}
+#view-casting .handle-link{color:#185FA5;text-decoration:none;font-weight:600}
+#view-casting .handle-link:hover{text-decoration:underline}
+#view-casting .tier{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600}
+#view-casting .tL1{background:#EAF3DE;color:#27500A}.tL2{background:#E6F1FB;color:#0C447C}
+#view-casting .tL3{background:#EEEDFE;color:#3C3489}.tL4{background:#FAEEDA;color:#633806}
+#view-casting .tL5{background:#FAECE7;color:#712B13}.tL6{background:#FBEAF0;color:#72243E}.tL7{background:#F1EFE8;color:#2C2C2A}
+#view-casting .pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap}
+#view-casting .fit-Strong{background:#E1F5EE;color:#085041}.fit-Good{background:#E6F1FB;color:#0C447C}.fit-Stretch{background:#F1EFE8;color:#5F5E5A}
+#view-casting .partner{background:#FAEEDA;color:#633806}
+#view-casting .conf-None{color:#888780}.conf-Light{color:#854F0B;font-weight:600}.conf-Heavy{color:#A32D2D;font-weight:600}
+#view-casting .proof{color:#1a1a18;line-height:1.55}
+#view-casting .proof .g{color:#185FA5;font-weight:600}
+#view-casting .muted{color:#888780}
+#view-casting .up{color:#0F6E56;font-weight:600}.down{color:#A32D2D;font-weight:600}
+#view-casting .sub-table{width:100%;border-collapse:collapse;font-size:11px;min-width:0;background:#fff;border:.5px solid #e0ddd6;border-radius:8px}
+#view-casting .sub-table th{font-size:10px;padding:5px 8px;cursor:default}
+#view-casting .sub-table td{padding:5px 8px;font-size:11px}
+#view-casting .loading,#view-casting .empty{text-align:center;padding:2.5rem 1rem;color:#888780;font-size:12px}
+#view-casting .err{color:#A32D2D}
+#view-casting .score{font-weight:600;font-size:13px}
+#view-casting .legend{font-size:11px;color:#888780;margin-top:10px;line-height:1.6}
+#view-casting table{table-layout:auto}
+#view-casting td{white-space:normal;overflow:visible;text-overflow:clip}
+.vtabs{display:flex;gap:4px;background:#f1efe8;border-radius:10px;padding:3px;margin-bottom:1.25rem;width:fit-content;flex-wrap:wrap}
+.vtabs a{font-size:12px;padding:6px 14px;border-radius:8px;text-decoration:none;color:#5f5e5a;font-weight:500;cursor:pointer}
+.vtabs a.active{background:#fff;color:#1a1a18;box-shadow:0 .5px 2px rgba(0,0,0,.08)}
+@media (max-width:640px){.container{padding:1rem}}
 </style>
 </head>
 <body>
@@ -65,10 +129,16 @@ tr.dr>td{padding:0;white-space:normal;overflow:visible;border-bottom:.5px solid 
     </div>
     <div style="display:flex;align-items:center;gap:8px">
       <span class="updated" id="updated-at"></span>
-      <button class="btn" onclick="loadData()">&#8635; Refresh</button>
+      <button class="btn" onclick="refreshView()">&#8635; Refresh</button>
     </div>
   </div>
 
+  <div class="vtabs">
+    <a id="vt-brands" onclick="showView('brands')">Brand rollup</a>
+    <a id="vt-casting" onclick="showView('casting')">Casting match</a>
+  </div>
+
+  <div id="view-brands">
   <!-- STATS -->
   <div class="stats">
     <div class="stat"><div class="stat-label">Total brands</div><div class="stat-val" id="s-brands">—</div></div>
@@ -101,6 +171,85 @@ tr.dr>td{padding:0;white-space:normal;overflow:visible;border-bottom:.5px solid 
   <div class="tbl-wrap">
     <div id="tbl"><div class="loading">Loading brand data...</div></div>
   </div>
+  </div>
+
+  <div id="view-casting" style="display:none">
+  <!-- INPUTS -->
+  <div class="panel">
+    <div class="grid">
+      <div class="fld">
+        <label for="brand">Brand you're casting for</label>
+        <input type="text" id="cm-brand" placeholder="Start typing a brand..." autocomplete="off">
+        <div class="sug" id="cm-brand-sug"></div>
+        <span class="hint" id="cm-brand-hint"></span>
+      </div>
+      <div class="fld">
+        <label for="cat">Category</label>
+        <select id="cm-cat"><option value="">Any category</option></select>
+      </div>
+      <div class="fld">
+        <label for="subcat">Subcategory</label>
+        <select id="cm-subcat" disabled><option value="">Any subcategory</option></select>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <div class="lbl" style="margin-bottom:6px">Similar brands <span class="hint" id="cm-sim-hint"></span></div>
+      <div class="chips" id="cm-sims"></div>
+      <div class="fld" style="margin-top:8px;max-width:360px">
+        <input type="text" id="cm-add-sim" placeholder="Add a brand" autocomplete="off">
+        <div class="sug" id="cm-sim-sug"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <div class="lbl" style="margin-bottom:6px">Tiers <span class="hint">(none selected = all)</span></div>
+      <div class="chips" id="cm-tiers"></div>
+    </div>
+
+    <div class="opts">
+      <label><input type="checkbox" id="cm-min-on"> Min GMV per brand</label>
+      <select id="cm-min-val" disabled style="width:auto">
+        <option value="500">$500+</option>
+        <option value="1000">$1K+</option>
+        <option value="5000" selected>$5K+</option>
+        <option value="10000">$10K+</option>
+        <option value="25000">$25K+</option>
+        <option value="50000">$50K+</option>
+      </select>
+      <label><input type="checkbox" id="cm-hide-partners"> Hide existing partners</label>
+      <label><input type="checkbox" id="cm-hide-stretch"> Hide stretch fits</label>
+      <button class="btn" onclick="CM.resetForm()" style="margin-left:auto">Reset</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Matches</div><div class="stat-val" id="cm-s-count">—</div></div>
+    <div class="stat"><div class="stat-label">Strong fits</div><div class="stat-val" id="cm-s-strong">—</div></div>
+    <div class="stat"><div class="stat-label">Already work with brand</div><div class="stat-val" id="cm-s-partners">—</div></div>
+    <div class="stat"><div class="stat-label">Proof GMV (30d)</div><div class="stat-val" id="cm-s-gmv">—</div></div>
+  </div>
+
+  <div class="toolbar">
+    <span class="note"><span id="cm-synced"></span> · <span id="cm-note">30d GMV from Cruva. Click a row for the full brand breakdown.</span></span>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn" id="cm-btn-copy" onclick="CM.copyHandles()">Copy handles</button>
+      <button class="btn" id="cm-btn-link" onclick="CM.copyLink()">Copy link</button>
+      <button class="btn" onclick="CM.exportCsv()">Export CSV</button>
+    </div>
+  </div>
+
+  <div class="tbl-wrap"><div id="cm-tbl"><div class="loading">Loading roster and brand data...</div></div></div>
+
+  <div class="legend">
+    <b>Strong</b> = $5K+ combined on the similar brands, or 2+ subcategory brands totaling $5K+. <b>Good</b> = at least one similar or category brand. <b>Stretch</b> = main category matches but no brand proof yet.
+    Competitor share = biggest similar brand as a % of the creator's total 30d GMV (Light 20%+, Heavy 50%+).
+    Categories marked <i>inferred</i> are guessed from the creators who sell that brand.
+  </div>
+</div>
+
+  </div>
 
 </div>
 <script>
@@ -127,6 +276,7 @@ function loadData() {
 function onLoaded(r) {
   if (!r.success) { onErr({message: r.error}); return; }
   DATA = r.data || [];
+  window.BRAND_LAST_UPDATED = r.lastUpdated || '';
 
   document.getElementById('updated-at').textContent = 'Synced ' + new Date().toLocaleTimeString();
   document.getElementById('s-sync').textContent = r.lastUpdated || '—';
@@ -276,7 +426,631 @@ function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+
+// ============================================================
+// VIEW TABS
+// ============================================================
+var VIEW = 'brands';
+function showView(v) {
+  VIEW = v;
+  document.getElementById('view-brands').style.display  = v === 'brands' ? '' : 'none';
+  document.getElementById('view-casting').style.display = v === 'casting' ? '' : 'none';
+  document.getElementById('vt-brands').className  = v === 'brands' ? 'active' : '';
+  document.getElementById('vt-casting').className = v === 'casting' ? 'active' : '';
+  if (v === 'casting') {
+    if (location.hash !== '#casting') { try { history.replaceState(null, '', location.pathname + location.search + '#casting'); } catch (e) {} }
+    if (window.CM) CM.open();
+  } else {
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  }
+}
+function refreshView() { if (VIEW === 'casting') CM.loadAll(); else loadData(); }
+
 loadData();
+showView(location.hash === '#casting' ? 'casting' : 'brands');
+</script>
+<script>
+(function() {
+// ============================================================
+// CONFIG
+// ============================================================
+var API_BASE   = 'https://script.google.com/macros/s/AKfycbxI0as4vxdoXpl2yJSG1EKL3ftfSK2Amxx4TqpAYiTQCDLK6U8Wz1nDl4GT2UE1j76B/exec';
+var CATS_URL   = 'brand_categories.json';
+var ALL_TIERS  = ['L1','L2','L3','L4','L5','L6','L7'];
+var RETAILER   = 'Multi-Category Retailer';
+
+// ============================================================
+// STATE
+// ============================================================
+var CREATORS = [], BRANDS = [], BRAND_MAP = {}, CREATOR_MAP = {};
+var CATS = {}, CATS_LC = {}, HISTORY = {};
+var sims = [], simOn = {}, tiersOn = {};
+var ROWS = [], openRow = null, sortCol = 'score', sortAsc = false;
+var simsAuto = true;
+
+// ============================================================
+// LOAD
+// ============================================================
+function getJson(url) {
+  return fetch(url).then(function(r) { return r.json(); });
+}
+
+function loadAll() {
+  document.getElementById('cm-tbl').innerHTML = '<div class="loading">Loading roster and brand data...</div>';
+  Promise.all([
+    getJson(API_BASE),
+    (window.DATA && window.DATA.length) ? Promise.resolve({ success: true, data: window.DATA, lastUpdated: window.BRAND_LAST_UPDATED || '' }) : getJson(API_BASE + '?tab=brand'),
+    getJson(CATS_URL).catch(function() { return {}; }),
+    getJson(API_BASE + '?tab=history').catch(function() { return null; })
+  ]).then(function(res) {
+    var r = res[0], b = res[1];
+    if (!r || !r.success) throw new Error((r && r.error) || 'Roster feed failed');
+    if (!b || !b.success) throw new Error((b && b.error) || 'Brand feed failed');
+    CREATORS = r.data || [];
+    BRANDS   = b.data || [];
+    CATS     = res[2] || {};
+    buildIndexes(res[3]);
+    document.getElementById('cm-synced').textContent = 'Synced ' + new Date().toLocaleTimeString() + (b.lastUpdated ? ' · data ' + b.lastUpdated : '');
+    buildCategorySelect();
+    readUrl();
+    run();
+  }).catch(function(e) {
+    document.getElementById('cm-tbl').innerHTML = '<div class="loading err">Error: ' + esc(e.message || 'unknown') + '</div>';
+  });
+}
+
+function num(v) {
+  if (typeof v === 'number') return v;
+  if (v == null) return 0;
+  var s = String(v).replace(/[$,\s+]/g, '');
+  var m = 1;
+  if (/k$/i.test(s)) { m = 1e3; s = s.slice(0, -1); }
+  else if (/m$/i.test(s)) { m = 1e6; s = s.slice(0, -1); }
+  var n = parseFloat(s);
+  return isNaN(n) ? 0 : n * m;
+}
+
+function buildIndexes(hist) {
+  CATS_LC = {};
+  Object.keys(CATS).forEach(function(k) { CATS_LC[k.toLowerCase().trim()] = CATS[k]; });
+
+  CREATOR_MAP = {};
+  CREATORS.forEach(function(c) {
+    c._gmv = num(c.gmv);
+    c._brands = {};
+    CREATOR_MAP[String(c.handle).toLowerCase()] = c;
+  });
+
+  BRAND_MAP = {};
+  BRANDS.forEach(function(b) {
+    b._gmv = num(b.gmv);
+    var catW = {};
+    (b.creators || []).forEach(function(x) {
+      var c = CREATOR_MAP[String(x.handle).toLowerCase()];
+      if (!c) return;
+      var g = num(x.gmv);
+      c._brands[b.name] = { gmv: g, videos: num(x.videos), views: num(x.views) };
+      if (c.category && c.category !== '--' && c.category !== '—') catW[c.category] = (catW[c.category] || 0) + Math.max(g, 1);
+    });
+    var known = CATS_LC[String(b.name).toLowerCase().trim()];
+    if (known && known[0]) {
+      b._cat = known[0]; b._sub = known[1] || ''; b._src = 'tagged';
+    } else {
+      var best = '', bv = 0;
+      for (var k in catW) if (catW[k] > bv) { bv = catW[k]; best = k; }
+      b._cat = best; b._sub = ''; b._src = best ? 'inferred' : '';
+    }
+    BRAND_MAP[b.name] = b;
+  });
+
+  // Fall back to the roster feed's per-creator brand list for anything the brand feed missed
+  CREATORS.forEach(function(c) {
+    (c.brands || []).forEach(function(x) {
+      if (!x || !x.name || c._brands[x.name]) return;
+      c._brands[x.name] = { gmv: num(x.gmv), videos: num(x.videos), views: num(x.views) };
+    });
+  });
+
+  // Optional Brand History feed (?tab=history) for trend
+  HISTORY = {};
+  if (hist && hist.success && hist.data && hist.data.length && hist.data[0].brand !== undefined) {
+    hist.data.forEach(function(h) {
+      HISTORY[(String(h.handle) + '|' + String(h.brand)).toLowerCase()] = { pct: num(h.pctChange), status: h.status || '' };
+    });
+  }
+}
+
+// ============================================================
+// FORM
+// ============================================================
+function taxonomy() {
+  var t = {};
+  BRANDS.forEach(function(b) {
+    if (!b._cat) return;
+    if (!t[b._cat]) t[b._cat] = {};
+    if (b._sub) t[b._cat][b._sub] = 1;
+  });
+  return t;
+}
+
+function buildCategorySelect() {
+  var t = taxonomy();
+  var sel = document.getElementById('cm-cat');
+  var cur = sel.value;
+  var h = '<option value="">Any category</option>';
+  Object.keys(t).sort().forEach(function(c) {
+    if (c === RETAILER) return;
+    h += '<option' + (c === cur ? ' selected' : '') + '>' + esc(c) + '</option>';
+  });
+  sel.innerHTML = h;
+  buildSubSelect();
+}
+
+function buildSubSelect(val) {
+  var t = taxonomy();
+  var cat = document.getElementById('cm-cat').value;
+  var sel = document.getElementById('cm-subcat');
+  var subs = cat && t[cat] ? Object.keys(t[cat]).sort() : [];
+  var h = '<option value="">Any subcategory</option>';
+  subs.forEach(function(s) { h += '<option' + (s === val ? ' selected' : '') + '>' + esc(s) + '</option>'; });
+  sel.innerHTML = h;
+  sel.disabled = !subs.length;
+}
+
+function drawTiers() {
+  var h = '';
+  ALL_TIERS.forEach(function(t) {
+    h += '<span class="chip' + (tiersOn[t] ? ' on' : '') + '" onclick="CM.toggleTier(\'' + t + '\')">' + t + '</span>';
+  });
+  document.getElementById('cm-tiers').innerHTML = h;
+}
+function toggleTier(t) { tiersOn[t] = !tiersOn[t]; drawTiers(); run(); }
+
+function drawSims() {
+  var el = document.getElementById('cm-sims');
+  if (!sims.length) { el.innerHTML = '<span class="hint">None yet. Pick a brand or category, or add brands below.</span>'; return; }
+  var h = '';
+  sims.forEach(function(n, i) {
+    var b = BRAND_MAP[n];
+    var tip = b ? (b._cat + (b._sub ? ' > ' + b._sub : '')) : '';
+    h += '<span class="chip' + (simOn[n] ? ' on' : '') + '" title="' + esc(tip) + '" onclick="CM.toggleSim(' + i + ')">' + (simOn[n] ? '&#10003; ' : '') + esc(n) +
+         ' <span class="x" onclick="CM.removeSim(event,' + i + ')">&times;</span></span>';
+  });
+  el.innerHTML = h;
+}
+function toggleSim(i) { var n = sims[i]; simOn[n] = !simOn[n]; drawSims(); run(); }
+function removeSim(e, i) { e.stopPropagation(); var n = sims[i]; sims.splice(i, 1); delete simOn[n]; drawSims(); run(); }
+
+function addSim(n) {
+  if (!n || sims.indexOf(n) > -1) return;
+  sims.push(n); simOn[n] = true; drawSims(); run();
+}
+
+function brandHint(b) {
+  var hint = document.getElementById('cm-brand-hint');
+  if (!b) { hint.textContent = document.getElementById('cm-brand').value.trim() ? 'Not on the roster yet. Pick a category and similar brands are suggested from it.' : ''; return; }
+  hint.innerHTML = fmtGMV(b._gmv) + ' roster GMV · ' + (b.creatorCount || (b.creators || []).length) + ' creators' +
+    (b._cat ? ' · ' + esc(b._cat) + (b._sub ? ' > ' + esc(b._sub) : '') + (b._src === 'inferred' ? ' <i>(inferred)</i>' : '') : '');
+}
+
+function setBrand(name) {
+  document.getElementById('cm-brand').value = name;
+  var b = BRAND_MAP[name];
+  brandHint(b);
+  if (b && b._cat && b._cat !== RETAILER) {
+    document.getElementById('cm-cat').value = b._cat;
+    buildSubSelect(b._sub);
+  }
+  simsAuto = true;
+  suggestSims();
+  run();
+}
+
+// Similar brands: brands that share the most roster creators (weighted by GMV) with the target, same category.
+// If the target isn't on the roster, fall back to the top brands in the chosen category/subcategory.
+function suggestSims() {
+  var name = document.getElementById('cm-brand').value.trim();
+  var cat  = document.getElementById('cm-cat').value;
+  var sub  = document.getElementById('cm-subcat').value;
+  var t = BRAND_MAP[name];
+  var out = [], hint = '';
+
+  if (t && (t.creators || []).length) {
+    var score = {};
+    (t.creators || []).forEach(function(x) {
+      var c = CREATOR_MAP[String(x.handle).toLowerCase()];
+      if (!c) return;
+      var tg = Math.max(num(x.gmv), 1);
+      for (var n in c._brands) {
+        if (n === name) continue;
+        var g = c._brands[n].gmv;
+        if (g <= 0) continue;
+        score[n] = (score[n] || 0) + Math.min(g, tg) + g * 0.05;
+      }
+    });
+    var tcat = cat || t._cat;
+    out = Object.keys(score).filter(function(n) {
+      var b = BRAND_MAP[n];
+      if (!b || b._cat === RETAILER) return false;
+      if (tcat && b._cat !== tcat) return false;
+      return true;
+    }).sort(function(a, b) {
+      var sa = score[a] * (sub && BRAND_MAP[a]._sub === sub ? 2 : 1);
+      var sb = score[b] * (sub && BRAND_MAP[b]._sub === sub ? 2 : 1);
+      return sb - sa;
+    }).slice(0, 8);
+    hint = out.length ? 'auto-suggested from creators who already sell ' + name : 'no overlap found, add brands below';
+  } else if (cat) {
+    out = BRANDS.filter(function(b) {
+      return b._cat === cat && (!sub || b._sub === sub);
+    }).sort(function(a, b) { return b._gmv - a._gmv; }).slice(0, 8).map(function(b) { return b.name; });
+    hint = 'top roster brands in ' + (sub || cat);
+  } else {
+    hint = '';
+  }
+  sims = out; simOn = {};
+  out.forEach(function(n) { simOn[n] = true; });
+  document.getElementById('cm-sim-hint').textContent = hint ? '(' + hint + ')' : '';
+  drawSims();
+}
+
+function resetForm() {
+  document.getElementById('cm-brand').value = '';
+  document.getElementById('cm-cat').value = '';
+  buildSubSelect();
+  document.getElementById('cm-min-on').checked = false;
+  document.getElementById('cm-min-val').disabled = true;
+  document.getElementById('cm-hide-partners').checked = false;
+  document.getElementById('cm-hide-stretch').checked = false;
+  tiersOn = {}; sims = []; simOn = {};
+  document.getElementById('cm-sim-hint').textContent = '';
+  brandHint(null); drawTiers(); drawSims(); run();
+}
+
+// Type-ahead
+function attachSuggest(inputId, boxId, onPick) {
+  var inp = document.getElementById(inputId), box = document.getElementById(boxId), idx = -1;
+  function render() {
+    var q = inp.value.toLowerCase().trim();
+    if (!q) { box.style.display = 'none'; return; }
+    var m = BRANDS.filter(function(b) { return b.name.toLowerCase().indexOf(q) > -1; })
+      .sort(function(a, b) {
+        var as = a.name.toLowerCase().indexOf(q) === 0 ? 1 : 0, bs = b.name.toLowerCase().indexOf(q) === 0 ? 1 : 0;
+        return (bs - as) || (b._gmv - a._gmv);
+      }).slice(0, 8);
+    idx = -1;
+    box.innerHTML = m.map(function(b) {
+      return '<div data-n="' + esc(b.name) + '">' + esc(b.name) + '<span>' + esc(b._sub || b._cat || '') + ' · ' + fmtGMV(b._gmv) + '</span></div>';
+    }).join('');
+    box.style.display = m.length ? 'block' : 'none';
+    Array.prototype.forEach.call(box.children, function(d) {
+      d.onmousedown = function(e) { e.preventDefault(); box.style.display = 'none'; onPick(d.getAttribute('data-n')); };
+    });
+  }
+  inp.addEventListener('input', render);
+  inp.addEventListener('focus', render);
+  inp.addEventListener('blur', function() { setTimeout(function() { box.style.display = 'none'; }, 100); });
+  inp.addEventListener('keydown', function(e) {
+    var items = box.children;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!items.length) return;
+      e.preventDefault();
+      idx = e.key === 'ArrowDown' ? Math.min(items.length - 1, idx + 1) : Math.max(0, idx - 1);
+      Array.prototype.forEach.call(items, function(d, i) { d.className = i === idx ? 'hl' : ''; });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      var pick = idx > -1 && items[idx] ? items[idx].getAttribute('data-n') : inp.value.trim();
+      box.style.display = 'none';
+      onPick(pick);
+    } else if (e.key === 'Escape') {
+      box.style.display = 'none';
+    }
+  });
+}
+
+// ============================================================
+// MATCHING
+// ============================================================
+function run() {
+  if (!CREATORS.length) return;
+  var target = document.getElementById('cm-brand').value.trim();
+  var cat    = document.getElementById('cm-cat').value;
+  var sub    = document.getElementById('cm-subcat').value;
+  var min    = document.getElementById('cm-min-on').checked ? +document.getElementById('cm-min-val').value : 0;
+  var hideP  = document.getElementById('cm-hide-partners').checked;
+  var hideS  = document.getElementById('cm-hide-stretch').checked;
+  var anyTier = !ALL_TIERS.some(function(t) { return tiersOn[t]; });
+  var active = sims.filter(function(n) { return simOn[n]; });
+  var activeSet = {}; active.forEach(function(n) { activeSet[n] = 1; });
+
+  if (!target && !cat && !active.length) {
+    ROWS = [];
+    setStats();
+    document.getElementById('cm-tbl').innerHTML = '<div class="empty">Pick the brand you\'re casting for, a category, or a few similar brands to see matches.</div>';
+    writeUrl();
+    return;
+  }
+
+  var rows = [];
+  CREATORS.forEach(function(c) {
+    if (!anyTier && !tiersOn[c.tier]) return;
+    var p = target && c._brands[target] ? c._brands[target] : null;
+    if (p && hideP) return;
+
+    var simHits = [], subHits = [], catHits = [];
+    var simG = 0, subG = 0, catG = 0, maxSim = 0, vids = 0;
+    for (var n in c._brands) {
+      if (n === target) continue;
+      var x = c._brands[n], g = x.gmv;
+      if (g <= 0 || g < min) continue;
+      var b = BRAND_MAP[n];
+      var hit = { name: n, gmv: g, videos: x.videos, gpv: x.videos ? g / x.videos : 0, trend: HISTORY[(c.handle + '|' + n).toLowerCase()] || null };
+      if (activeSet[n]) {
+        simHits.push(hit); simG += g; vids += x.videos; maxSim = Math.max(maxSim, g);
+      } else if (b && cat && b._cat === cat) {
+        if (sub && b._sub === sub) { subHits.push(hit); subG += g; vids += x.videos; }
+        else { catHits.push(hit); catG += g; vids += x.videos; }
+      }
+    }
+
+    var hasProof = simHits.length || subHits.length || catHits.length;
+    var stretch = !hasProof && cat && c.category === cat;
+    if (!hasProof && !stretch && !p) return;
+    if (stretch && hideS) return;
+
+    var fit;
+    if (stretch || !hasProof) fit = 'Stretch';
+    else if (simG >= 5000 || (subHits.length >= 2 && subG >= 5000) || (!active.length && !sub && catHits.length >= 3 && catG >= 5000)) fit = 'Strong';
+    else fit = 'Good';
+
+    var allG = 0; for (var k in c._brands) allG += Math.max(0, c._brands[k].gmv);
+    var denom = Math.max(c._gmv, allG);
+    var share = denom ? maxSim / denom : 0;
+    var proofG = simG + subG + catG;
+    rows.push({
+      c: c, partner: p, fit: fit,
+      sim: sortHits(simHits), sub: sortHits(subHits), cat: sortHits(catHits),
+      simG: simG, subG: subG, catG: catG, proofG: proofG,
+      gpv: vids ? proofG / vids : 0,
+      depth: simHits.length + subHits.length + catHits.length,
+      conf: share >= 0.5 ? 'Heavy' : share >= 0.2 ? 'Light' : 'None', share: share
+    });
+  });
+
+  // Score 0-100: similar brand GMV, subcategory/category GMV, number of proof brands, GMV per video
+  var mx = function(k) { return Math.max.apply(null, rows.map(function(r) { return r[k]; }).concat([1])); };
+  rows.forEach(function(r) { r.catSub = r.subG + r.catG * (sub ? 0.3 : 1); });
+  var mSim = mx('simG'), mCat = mx('catSub'), mGpv = mx('gpv');
+  var hasSims = active.length > 0, hasCat = !!cat;
+  var wS = hasSims ? (hasCat ? 0.5 : 0.7) : 0;
+  var wC = hasCat ? (hasSims ? 0.25 : 0.65) : 0;
+  var wD = 0.1, wE = 0.15;
+  var tot = wS + wC + wD + wE;
+  rows.forEach(function(r) {
+    var s = wS * lg(r.simG, mSim) + wC * lg(r.catSub, mCat) + wD * Math.min(1, r.depth / 5) + wE * lg(r.gpv, mGpv);
+    r.score = Math.round(100 * s / tot);
+    if (r.fit === 'Stretch') r.score = Math.min(r.score, 10);
+  });
+
+  ROWS = rows;
+  sortRows();
+  setStats();
+  render();
+  writeUrl();
+}
+
+function lg(v, m) { return m > 1 ? Math.log10(1 + v) / Math.log10(1 + m) : 0; }
+function sortHits(a) { return a.sort(function(x, y) { return y.gmv - x.gmv; }); }
+
+function sortRows() {
+  var key = {
+    score: function(r) { return r.score; }, handle: function(r) { return r.c.handle; },
+    tier: function(r) { return r.c.tier; }, proof: function(r) { return r.proofG; },
+    gpv: function(r) { return r.gpv; }, gmv: function(r) { return r.c._gmv; },
+    fit: function(r) { return { Strong: 3, Good: 2, Stretch: 1 }[r.fit]; }, conf: function(r) { return r.share; }
+  }[sortCol];
+  ROWS.sort(function(a, b) {
+    var av = key(a), bv = key(b);
+    if (av < bv) return sortAsc ? -1 : 1;
+    if (av > bv) return sortAsc ? 1 : -1;
+    return b.score - a.score;
+  });
+}
+
+function setStats() {
+  var target = document.getElementById('cm-brand').value.trim();
+  document.getElementById('cm-s-count').textContent = ROWS.length ? ROWS.length : '—';
+  document.getElementById('cm-s-strong').textContent = ROWS.length ? ROWS.filter(function(r) { return r.fit === 'Strong'; }).length : '—';
+  document.getElementById('cm-s-partners').textContent = target ? ROWS.filter(function(r) { return r.partner; }).length : '—';
+  document.getElementById('cm-s-gmv').textContent = ROWS.length ? fmtGMV(ROWS.reduce(function(s, r) { return s + r.proofG; }, 0)) : '—';
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+  var target = document.getElementById('cm-brand').value.trim();
+  if (!ROWS.length) {
+    document.getElementById('cm-tbl').innerHTML = '<div class="empty">No matches. Try more tiers, turn off min GMV, or add similar brands.</div>';
+    return;
+  }
+  var h = '<table><thead><tr>';
+  h += th('#', null) + th('Creator', 'handle') + th('Tier', 'tier') + th('Fit', 'fit') + th('Score', 'score');
+  h += '<th style="cursor:default;width:34%">Proof brands (30d GMV)</th>';
+  h += th('Proof GMV', 'proof') + th('GMV / video', 'gpv') + th('Creator GMV', 'gmv') + '<th style="cursor:default">Followers</th>' + th('Competitor share', 'conf');
+  h += '</tr></thead><tbody>';
+
+  ROWS.forEach(function(r, i) {
+    var c = r.c, open = openRow === c.handle;
+    var all = r.sim.concat(r.sub, r.cat);
+    var proof = all.slice(0, 3).map(function(x) {
+      return esc(x.name) + ' <span class="g">' + fmtGMV(x.gmv) + '</span>' + trendHtml(x.trend);
+    }).join(' · ');
+    if (all.length > 3) proof += ' <span class="muted">+' + (all.length - 3) + ' more</span>';
+    if (!all.length) proof = '<span class="muted">Main category matches, no brand proof yet</span>';
+
+    h += '<tr class="cr" onclick="CM.toggleRow(\'' + jsq(c.handle) + '\')">';
+    h += '<td class="muted" style="font-size:11px">' + (i + 1) + '</td>';
+    h += '<td style="white-space:nowrap"><a class="handle-link" href="https://www.tiktok.com/@' + esc(c.handle) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">@' + esc(c.handle) + '</a>' +
+         (r.partner ? '<div style="margin-top:3px"><span class="pill partner">Sells ' + esc(target) + ' ' + fmtGMV(r.partner.gmv) + '</span></div>' : '') + '</td>';
+    h += '<td><span class="tier t' + esc(c.tier) + '">' + esc(c.tier) + '</span></td>';
+    h += '<td><span class="pill fit-' + r.fit + '">' + r.fit + '</span></td>';
+    h += '<td class="score">' + r.score + '</td>';
+    h += '<td class="proof">' + proof + '</td>';
+    h += '<td style="font-weight:600;color:#185FA5">' + (r.proofG ? fmtGMV(r.proofG) : '—') + '</td>';
+    h += '<td>' + (r.gpv ? fmtGMV(r.gpv) : '—') + '</td>';
+    h += '<td>' + esc(c.gmvDisplay || fmtGMV(c._gmv)) + '</td>';
+    h += '<td class="muted">' + esc(c.followersDisplay || '—') + '</td>';
+    h += '<td class="conf-' + r.conf + '">' + r.conf + (r.share >= 0.2 ? ' (' + Math.round(r.share * 100) + '%)' : '') + ' <span style="color:#ccc">' + (open ? '▲' : '▼') + '</span></td>';
+    h += '</tr>';
+    if (open) h += '<tr class="dr"><td colspan="11">' + detail(r) + '</td></tr>';
+  });
+  h += '</tbody></table>';
+  document.getElementById('cm-tbl').innerHTML = h;
+}
+
+function trendHtml(t) {
+  if (!t || !t.pct) return '';
+  var p = Math.round(t.pct);
+  return p > 0 ? ' <span class="up">&#9650;' + p + '%</span>' : ' <span class="down">&#9660;' + Math.abs(p) + '%</span>';
+}
+
+function detail(r) {
+  var c = r.c;
+  function block(title, hits) {
+    if (!hits.length) return '';
+    var t = '<div class="lbl" style="margin:10px 0 6px">' + title + '</div><table class="sub-table"><thead><tr><th>Brand</th><th>Category</th><th>GMV (30d)</th><th>Videos</th><th>GMV / video</th>' + (Object.keys(HISTORY).length ? '<th>Trend</th>' : '') + '</tr></thead><tbody>';
+    hits.forEach(function(x) {
+      var b = BRAND_MAP[x.name];
+      t += '<tr><td style="font-weight:500">' + esc(x.name) + '</td><td class="muted">' + (b ? esc(b._sub || b._cat || '—') + (b._src === 'inferred' ? ' <i>(inferred)</i>' : '') : '—') + '</td>' +
+           '<td style="font-weight:600;color:#185FA5">' + fmtGMV(x.gmv) + '</td><td>' + fmtNum(x.videos) + '</td><td>' + (x.gpv ? fmtGMV(x.gpv) : '—') + '</td>' +
+           (Object.keys(HISTORY).length ? '<td>' + (trendHtml(x.trend) || '<span class="muted">—</span>') + '</td>' : '') + '</tr>';
+    });
+    return t + '</tbody></table>';
+  }
+  var sub = document.getElementById('cm-subcat').value, cat = document.getElementById('cm-cat').value;
+  var h = '<div class="dp">';
+  h += '<div class="muted" style="font-size:11px">Main category: ' + esc(c.category || '—') + ' · Avg GMV/video (all brands): ' + (c.avgGmvPerVideo && c.avgGmvPerVideo !== '--' ? '$' + parseFloat(c.avgGmvPerVideo).toFixed(2) : '—') + (c.followerGrowth ? ' · Follower growth: ' + esc(c.followerGrowth) : '') + '</div>';
+  h += block('Similar brands', r.sim);
+  h += block('Subcategory: ' + esc(sub), r.sub);
+  h += block('Category: ' + esc(cat), r.cat);
+  if (!r.sim.length && !r.sub.length && !r.cat.length) h += '<div class="muted" style="margin-top:8px">No brand proof in the current filters. Showing because their main category matches.</div>';
+  return h + '</div>';
+}
+
+function toggleRow(h) { openRow = openRow === h ? null : h; render(); }
+
+function th(label, col) {
+  if (!col) return '<th style="cursor:default">' + label + '</th>';
+  var arrow = sortCol === col ? (sortAsc ? ' ↑' : ' ↓') : '';
+  return '<th onclick="CM.sortBy(\'' + col + '\')">' + label + arrow + '</th>';
+}
+function sortBy(col) {
+  if (sortCol === col) sortAsc = !sortAsc; else { sortCol = col; sortAsc = (col === 'handle' || col === 'tier'); }
+  sortRows(); render();
+}
+
+// ============================================================
+// EXPORT / SHARE
+// ============================================================
+function copyText(t, btnId, label) {
+  var done = function() { var b = document.getElementById(btnId); b.textContent = 'Copied'; setTimeout(function() { b.textContent = label; }, 1400); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function() { fallbackCopy(t); done(); });
+  else { fallbackCopy(t); done(); }
+}
+function fallbackCopy(t) {
+  var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+function copyHandles() { copyText(ROWS.map(function(r) { return '@' + r.c.handle; }).join('\n'), 'cm-btn-copy', 'Copy handles'); }
+function copyLink() { writeUrl(); copyText(location.href, 'cm-btn-link', 'Copy link'); }
+
+function exportCsv() {
+  if (!ROWS.length) return;
+  var target = document.getElementById('cm-brand').value.trim();
+  var head = ['Rank','Handle','Tier','Fit','Score','Already sells ' + (target || 'brand'),'Proof brands','Proof GMV (30d)','GMV per video','Creator GMV (30d)','Followers','Main category','Competitor share'];
+  var lines = [head];
+  ROWS.forEach(function(r, i) {
+    var all = r.sim.concat(r.sub, r.cat).map(function(x) { return x.name + ' (' + fmtGMV(x.gmv) + ')'; }).join('; ');
+    lines.push([i + 1, '@' + r.c.handle, r.c.tier, r.fit, r.score, r.partner ? Math.round(r.partner.gmv) : '', all, Math.round(r.proofG), Math.round(r.gpv), Math.round(r.c._gmv), r.c.followersDisplay || '', r.c.category || '', r.conf + (r.share >= 0.2 ? ' ' + Math.round(r.share * 100) + '%' : '')]);
+  });
+  var csv = lines.map(function(l) { return l.map(function(v) { v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }).join(','); }).join('\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'casting-match-' + (target || 'search').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+function writeUrl() {
+  var p = new URLSearchParams();
+  var v = function(id) { return document.getElementById('cm-' + id).value.trim(); };
+  if (v('brand')) p.set('brand', v('brand'));
+  if (v('cat')) p.set('cat', v('cat'));
+  if (v('subcat')) p.set('sub', v('subcat'));
+  var on = sims.filter(function(n) { return simOn[n]; });
+  if (on.length) p.set('sims', on.join('|'));
+  var t = ALL_TIERS.filter(function(x) { return tiersOn[x]; });
+  if (t.length) p.set('tiers', t.join(','));
+  if (document.getElementById('cm-min-on').checked) p.set('min', document.getElementById('cm-min-val').value);
+  var qs = p.toString();
+  try { history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + '#casting'); } catch (e) {}
+}
+
+function readUrl() {
+  var p = new URLSearchParams(location.search);
+  if (![].concat(Array.from(p.keys())).length) return;
+  if (p.get('tiers')) p.get('tiers').split(',').forEach(function(t) { tiersOn[t] = true; });
+  drawTiers();
+  if (p.get('min')) { document.getElementById('cm-min-on').checked = true; document.getElementById('cm-min-val').disabled = false; document.getElementById('cm-min-val').value = p.get('min'); }
+  if (p.get('cat')) { document.getElementById('cm-cat').value = p.get('cat'); buildSubSelect(p.get('sub') || ''); }
+  if (p.get('brand')) { document.getElementById('cm-brand').value = p.get('brand'); brandHint(BRAND_MAP[p.get('brand')]); }
+  if (p.get('sims')) {
+    sims = p.get('sims').split('|'); simOn = {}; sims.forEach(function(n) { simOn[n] = true; });
+    document.getElementById('cm-sim-hint').textContent = '';
+    drawSims();
+  } else if (p.get('brand') || p.get('cat')) {
+    suggestSims();
+  }
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function fmtGMV(n) {
+  n = parseFloat(n); if (isNaN(n)) return '—';
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return '$' + Math.round(n / 1e3) + 'K';
+  return '$' + Math.round(n);
+}
+function fmtNum(n) {
+  n = parseFloat(n); if (!n) return '—';
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return Math.round(n / 1e3) + 'K';
+  return String(Math.round(n));
+}
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function jsq(s) { return esc(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
+
+// ============================================================
+// INIT
+// ============================================================
+attachSuggest('cm-brand', 'cm-brand-sug', function(n) { setBrand(n); });
+attachSuggest('cm-add-sim', 'cm-sim-sug', function(n) { if (BRAND_MAP[n]) { addSim(n); document.getElementById('cm-add-sim').value = ''; } });
+document.getElementById('cm-brand').addEventListener('change', function() {
+  var n = this.value.trim();
+  if (!BRAND_MAP[n]) { brandHint(null); if (document.getElementById('cm-cat').value) suggestSims(); run(); }
+});
+document.getElementById('cm-cat').addEventListener('change', function() { buildSubSelect(); suggestSims(); run(); });
+document.getElementById('cm-subcat').addEventListener('change', function() { suggestSims(); run(); });
+document.getElementById('cm-min-on').addEventListener('change', function() { document.getElementById('cm-min-val').disabled = !this.checked; run(); });
+['cm-min-val', 'cm-hide-partners', 'cm-hide-stretch'].forEach(function(id) { document.getElementById(id).addEventListener('change', run); });
+drawTiers(); drawSims();
+var loaded = false;
+window.CM = { toggleTier: toggleTier, toggleSim: toggleSim, removeSim: removeSim, toggleRow: toggleRow, sortBy: sortBy, loadAll: loadAll, resetForm: resetForm, copyHandles: copyHandles, copyLink: copyLink, exportCsv: exportCsv,
+  open: function() { if (!loaded) { loaded = true; loadAll(); } } };
+})();
+if (location.hash === '#casting') CM.open();
 </script>
 </body>
 </html>
