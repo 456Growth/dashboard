@@ -481,7 +481,8 @@ function loadAll() {
     getJson(API_BASE),
     (window.DATA && window.DATA.length) ? Promise.resolve({ success: true, data: window.DATA, lastUpdated: window.BRAND_LAST_UPDATED || '' }) : getJson(API_BASE + '?tab=brand'),
     getJson(CATS_URL).catch(function() { return {}; }),
-    getJson(API_BASE + '?tab=history').catch(function() { return null; })
+    getJson(API_BASE + '?tab=history').catch(function() { return null; }),
+    getJson(API_BASE + '?tab=videos').catch(function() { return null; })
   ]).then(function(res) {
     var r = res[0], b = res[1];
     if (!r || !r.success) throw new Error((r && r.error) || 'Roster feed failed');
@@ -489,7 +490,7 @@ function loadAll() {
     CREATORS = r.data || [];
     BRANDS   = b.data || [];
     CATS     = res[2] || {};
-    buildIndexes(res[3]);
+    buildIndexes(res[3], res[4]);
     document.getElementById('cm-synced').textContent = 'Synced ' + new Date().toLocaleTimeString() + (b.lastUpdated ? ' · data ' + b.lastUpdated : '');
     buildCategorySelect();
     readUrl();
@@ -510,7 +511,18 @@ function num(v) {
   return isNaN(n) ? 0 : n * m;
 }
 
-function buildIndexes(hist) {
+// Top video per creator + brand. Reads any of these optional fields, so the feed can use whichever names are easiest:
+// topVideoUrl / topVideoId / videoUrl / videoId, topVideoViews / videoViews, topVideoGmv / videoGmv, topVideoTitle / videoTitle
+function pickVideo(x, handle, strict) {
+  if (!x) return null;
+  var url = x.topVideoUrl || x.videoUrl || (strict ? '' : x.url) || '';
+  var id  = x.topVideoId || x.videoId || x.video_id || '';
+  if (!url && id) url = 'https://www.tiktok.com/@' + encodeURIComponent(handle) + '/video/' + encodeURIComponent(String(id));
+  if (!url || !/^https:\/\/(www\.|vm\.|m\.)?tiktok\.com\//i.test(String(url))) return null;
+  return { url: String(url), views: num(x.topVideoViews || x.videoViews || (strict ? 0 : x.views)), gmv: num(x.topVideoGmv || x.videoGmv || (strict ? 0 : x.gmv)), title: String(x.topVideoTitle || x.videoTitle || (strict ? '' : x.title) || '') };
+}
+
+function buildIndexes(hist, vids) {
   CATS_LC = {};
   Object.keys(CATS).forEach(function(k) { CATS_LC[k.toLowerCase().trim()] = CATS[k]; });
 
@@ -529,7 +541,7 @@ function buildIndexes(hist) {
       var c = CREATOR_MAP[String(x.handle).toLowerCase()];
       if (!c) return;
       var g = num(x.gmv);
-      c._brands[b.name] = { gmv: g, videos: num(x.videos), views: num(x.views) };
+      c._brands[b.name] = { gmv: g, videos: num(x.videos), views: num(x.views), top: (x.topVideoUrl || x.topVideoId) ? pickVideo(x, c.handle, true) : null };
       if (c.category && c.category !== '--' && c.category !== '—') catW[c.category] = (catW[c.category] || 0) + Math.max(g, 1);
     });
     var known = CATS_LC[String(b.name).toLowerCase().trim()];
@@ -550,6 +562,19 @@ function buildIndexes(hist) {
       c._brands[x.name] = { gmv: num(x.gmv), videos: num(x.videos), views: num(x.views) };
     });
   });
+
+  // Optional Top Videos feed (?tab=videos): one row per creator + brand with handle, brand, and video fields
+  if (vids && vids.success && vids.data && vids.data.length) {
+    vids.data.forEach(function(v) {
+      var c = CREATOR_MAP[String(v.handle || '').replace(/^@/, '').toLowerCase()];
+      if (!c || !v.brand) return;
+      var bn = String(v.brand);
+      if (!c._brands[bn]) { var lc = bn.toLowerCase(); for (var k in c._brands) if (k.toLowerCase() === lc) { bn = k; break; } }
+      if (!c._brands[bn]) return;
+      var t = pickVideo(v, c.handle);
+      if (t && (!c._brands[bn].top || t.gmv > c._brands[bn].top.gmv)) c._brands[bn].top = t;
+    });
+  }
 
   // Optional Brand History feed (?tab=history) for trend
   HISTORY = {};
@@ -784,7 +809,7 @@ function run() {
       var x = c._brands[n], g = x.gmv;
       if (g <= 0 || g < min) continue;
       var b = BRAND_MAP[n];
-      var hit = { name: n, gmv: g, videos: x.videos, gpv: x.videos ? g / x.videos : 0, trend: HISTORY[(c.handle + '|' + n).toLowerCase()] || null };
+      var hit = { name: n, gmv: g, videos: x.videos, gpv: x.videos ? g / x.videos : 0, top: x.top || null, trend: HISTORY[(c.handle + '|' + n).toLowerCase()] || null };
       if (activeSet[n]) {
         simHits.push(hit); simG += g; vids += x.videos; maxSim = Math.max(maxSim, g);
       } else if (b && cat && b._cat === cat) {
@@ -807,7 +832,13 @@ function run() {
     var denom = Math.max(c._gmv, allG);
     var share = denom ? maxSim / denom : 0;
     var proofG = simG + subG + catG;
-    rows.push({
+    var vid = null;
+    if (p && p.top) vid = { brand: target, v: p.top };
+    else [sortHits(simHits), sortHits(subHits), sortHits(catHits)].some(function(list) {
+      for (var q = 0; q < list.length; q++) if (list[q].top) { vid = { brand: list[q].name, v: list[q].top }; return true; }
+      return false;
+    });
+    rows.push({ vid: vid,
       c: c, partner: p, fit: fit,
       sim: sortHits(simHits), sub: sortHits(subHits), cat: sortHits(catHits),
       simG: simG, subG: subG, catG: catG, proofG: proofG,
@@ -877,7 +908,7 @@ function render() {
   var h = '<table><thead><tr>';
   h += th('#', null) + th('Creator', 'handle') + th('Tier', 'tier') + th('Fit', 'fit') + th('Score', 'score');
   h += '<th style="cursor:default;width:34%">Proof brands (30d GMV)</th>';
-  h += th('Proof GMV', 'proof') + th('GMV / video', 'gpv') + th('Creator GMV', 'gmv') + '<th style="cursor:default">Followers</th>' + th('Competitor share', 'conf');
+  h += th('Proof GMV', 'proof') + th('GMV / video', 'gpv') + th('Creator GMV', 'gmv') + '<th style="cursor:default">Followers</th>' + '<th style="cursor:default">Top video</th>' + th('Competitor share', 'conf');
   h += '</tr></thead><tbody>';
 
   ROWS.forEach(function(r, i) {
@@ -901,12 +932,22 @@ function render() {
     h += '<td>' + (r.gpv ? fmtGMV(r.gpv) : '—') + '</td>';
     h += '<td>' + esc(c.gmvDisplay || fmtGMV(c._gmv)) + '</td>';
     h += '<td class="muted">' + esc(c.followersDisplay || '—') + '</td>';
+    h += '<td style="white-space:nowrap">' + videoCell(r.vid) + '</td>';
     h += '<td class="conf-' + r.conf + '">' + r.conf + (r.share >= 0.2 ? ' (' + Math.round(r.share * 100) + '%)' : '') + ' <span style="color:#ccc">' + (open ? '▲' : '▼') + '</span></td>';
     h += '</tr>';
-    if (open) h += '<tr class="dr"><td colspan="11">' + detail(r) + '</td></tr>';
+    if (open) h += '<tr class="dr"><td colspan="12">' + detail(r) + '</td></tr>';
   });
   h += '</tbody></table>';
   document.getElementById('cm-tbl').innerHTML = h;
+}
+
+function videoCell(vid) {
+  if (!vid) return '<span class="muted">—</span>';
+  var v = vid.v, meta = [];
+  if (v.views) meta.push(fmtNum(v.views) + ' views');
+  if (v.gmv) meta.push(fmtGMV(v.gmv));
+  return '<a class="handle-link" href="' + esc(v.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()"' + (v.title ? ' title="' + esc(v.title) + '"' : '') + '>&#9654; Watch</a>' +
+         '<div class="muted" style="font-size:11px;margin-top:2px">' + esc(vid.brand) + (meta.length ? ' · ' + meta.join(' · ') : '') + '</div>';
 }
 
 function trendHtml(t) {
@@ -919,11 +960,11 @@ function detail(r) {
   var c = r.c;
   function block(title, hits) {
     if (!hits.length) return '';
-    var t = '<div class="lbl" style="margin:10px 0 6px">' + title + '</div><table class="sub-table"><thead><tr><th>Brand</th><th>Category</th><th>GMV (30d)</th><th>Videos</th><th>GMV / video</th>' + (Object.keys(HISTORY).length ? '<th>Trend</th>' : '') + '</tr></thead><tbody>';
+    var t = '<div class="lbl" style="margin:10px 0 6px">' + title + '</div><table class="sub-table"><thead><tr><th>Brand</th><th>Category</th><th>GMV (30d)</th><th>Videos</th><th>GMV / video</th><th>Top video</th>' + (Object.keys(HISTORY).length ? '<th>Trend</th>' : '') + '</tr></thead><tbody>';
     hits.forEach(function(x) {
       var b = BRAND_MAP[x.name];
       t += '<tr><td style="font-weight:500">' + esc(x.name) + '</td><td class="muted">' + (b ? esc(b._sub || b._cat || '—') + (b._src === 'inferred' ? ' <i>(inferred)</i>' : '') : '—') + '</td>' +
-           '<td style="font-weight:600;color:#185FA5">' + fmtGMV(x.gmv) + '</td><td>' + fmtNum(x.videos) + '</td><td>' + (x.gpv ? fmtGMV(x.gpv) : '—') + '</td>' +
+           '<td style="font-weight:600;color:#185FA5">' + fmtGMV(x.gmv) + '</td><td>' + fmtNum(x.videos) + '</td><td>' + (x.gpv ? fmtGMV(x.gpv) : '—') + '</td><td>' + (x.top ? '<a class="handle-link" href="' + esc(x.top.url) + '" target="_blank" rel="noopener">&#9654; Watch</a>' + (x.top.views ? ' <span class="muted">' + fmtNum(x.top.views) + ' views</span>' : '') : '<span class="muted">—</span>') + '</td>' +
            (Object.keys(HISTORY).length ? '<td>' + (trendHtml(x.trend) || '<span class="muted">—</span>') + '</td>' : '') + '</tr>';
     });
     return t + '</tbody></table>';
@@ -969,11 +1010,11 @@ function copyLink() { writeUrl(); copyText(location.href, 'cm-btn-link', 'Copy l
 function exportCsv() {
   if (!ROWS.length) return;
   var target = document.getElementById('cm-brand').value.trim();
-  var head = ['Rank','Handle','Tier','Fit','Score','Already sells ' + (target || 'brand'),'Proof brands','Proof GMV (30d)','GMV per video','Creator GMV (30d)','Followers','Main category','Competitor share'];
+  var head = ['Rank','Handle','Tier','Fit','Score','Already sells ' + (target || 'brand'),'Proof brands','Proof GMV (30d)','GMV per video','Creator GMV (30d)','Followers','Main category','Competitor share','Top video brand','Top video URL','Top video views','Top video GMV'];
   var lines = [head];
   ROWS.forEach(function(r, i) {
     var all = r.sim.concat(r.sub, r.cat).map(function(x) { return x.name + ' (' + fmtGMV(x.gmv) + ')'; }).join('; ');
-    lines.push([i + 1, '@' + r.c.handle, r.c.tier, r.fit, r.score, r.partner ? Math.round(r.partner.gmv) : '', all, Math.round(r.proofG), Math.round(r.gpv), Math.round(r.c._gmv), r.c.followersDisplay || '', r.c.category || '', r.conf + (r.share >= 0.2 ? ' ' + Math.round(r.share * 100) + '%' : '')]);
+    lines.push([i + 1, '@' + r.c.handle, r.c.tier, r.fit, r.score, r.partner ? Math.round(r.partner.gmv) : '', all, Math.round(r.proofG), Math.round(r.gpv), Math.round(r.c._gmv), r.c.followersDisplay || '', r.c.category || '', r.conf + (r.share >= 0.2 ? ' ' + Math.round(r.share * 100) + '%' : ''), r.vid ? r.vid.brand : '', r.vid ? r.vid.v.url : '', r.vid && r.vid.v.views ? Math.round(r.vid.v.views) : '', r.vid && r.vid.v.gmv ? Math.round(r.vid.v.gmv) : '']);
   });
   var csv = lines.map(function(l) { return l.map(function(v) { v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }).join(','); }).join('\n');
   var a = document.createElement('a');
